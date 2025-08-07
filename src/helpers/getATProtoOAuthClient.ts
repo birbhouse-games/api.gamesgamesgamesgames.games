@@ -85,20 +85,29 @@ export async function getATProtoOAuthClient() {
 
 			sessionStore: {
 				async set(sub: string, session: NodeSavedSession): Promise<void> {
-					supabase.auth.getUser()
-					// create or update the session
-					// use sub as AccountId field
+					await supabase
+						.from('ATproto Sessions')
+						.upsert([{
+							id: sub,
+							session,
+						}])
+						.select()
 				},
 
-				async get(sub: string): Promise</*NodeSavedSession | */undefined> {
-					// retrieve the session
-					// search for AccountId=sub
-					return undefined
+				async get(sub: string): Promise<NodeSavedSession | undefined> {
+					const { data } = await supabase
+						.from('ATproto Sessions')
+						.select('session')
+						.eq('id', sub)
+
+					return data[0]?.session as unknown as NodeSavedSession | undefined
 				},
 
 				async del(sub: string): Promise<void> {
-					// delete the session
-					// use AccountsId=sub for criteria
+					await supabase
+						.from('ATproto Sessions')
+						.delete()
+						.eq('id', sub)
 				},
 			},
 		})
