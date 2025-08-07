@@ -24,8 +24,12 @@ export const route = new Route({
 			return
 		}
 
-		const redirectURL = await atproto.client.authorize(context.query['handle'] as string)
-		context.redirect(redirectURL.toString())
+		try {
+			const redirectURL = await atproto.client.authorize(context.query['handle'] as string)
+			context.redirect(redirectURL.toString())
+		} catch (error) {
+			return context.errors.push(error)
+		}
 	},
 	methods: ['get'],
 	middlewares: [bodyBuilderMiddleware()],
