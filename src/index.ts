@@ -24,6 +24,7 @@ import { getPort } from './helpers/getPort'
 import { handleStart } from './helpers/handleStart'
 import { route as healthCheckRoute } from './routes/health'
 import { route as jwksRoute } from './routes/v1/atproto/jwks'
+import { route as logoutRoute } from './routes/v1/auth/logout'
 import { logger } from './helpers/logger'
 import { route as metricsRoute } from './routes/metrics'
 
@@ -66,6 +67,7 @@ const api = new API({
 		clientMetadataRoute,
 		healthCheckRoute,
 		jwksRoute,
+		logoutRoute,
 		metricsRoute,
 	],
 })
