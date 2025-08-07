@@ -28,8 +28,6 @@ export const route = new Route({
 
 		context.cookies.set('atprotoDID', session.did)
 
-		console.log(session)
-
 		// const {
 		// 	data,
 		// 	error,
