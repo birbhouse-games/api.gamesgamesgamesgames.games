@@ -10,6 +10,7 @@ import {
 
 // Local imports
 import { type KoaContext } from '../../../../typedefs/KoaContext'
+import { verifyAuthMiddleware } from '../../../../middleware/verifyAuthMiddleware'
 
 
 
@@ -28,6 +29,9 @@ export const route = new Route({
 		context.data = data.value
 	},
 	methods: ['get'],
-	middlewares: [bodyBuilderMiddleware()],
+	middlewares: [
+		bodyBuilderMiddleware(),
+		verifyAuthMiddleware(),
+	],
 	path: '/v1/atproto/user/profile',
 })
