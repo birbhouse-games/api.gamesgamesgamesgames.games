@@ -5,9 +5,6 @@ import {
 	metricsMiddleware,
 	statusCodeGeneratorMiddleware,
 } from '@trezy-studios/koa-api'
-import getPort, {
-	portNumbers,
-} from 'get-port'
 import compress from 'koa-compress'
 import cors from '@koa/cors'
 import { koaBody } from 'koa-body'
@@ -22,6 +19,7 @@ import { atprotoAuthMiddleware } from './middleware/atprotoAuthMiddleware'
 import { route as atprotoAuthCallbackRoute } from './routes/v1/auth/atproto'
 import { route as atprotoAuthRoute } from './routes/v1/auth/atproto/callback'
 import { route as clientMetadataRoute } from './routes/v1/atproto/client-metadata'
+import { getPort } from './helpers/getPort'
 import { handleStart } from './helpers/handleStart'
 import { route as healthCheckRoute } from './routes/health'
 import { route as jwksRoute } from './routes/v1/atproto/jwks'
@@ -33,19 +31,7 @@ import { route as metricsRoute } from './routes/metrics'
 
 
 // Constants
-const port = await (async () => {
-	if (process.env.PORT) {
-		const fromEnv = Number(process.env.PORT)
-
-		if (isNaN(fromEnv) || fromEnv <= 0) {
-			throw new Error(`Invalid port: ${fromEnv}`)
-	 	}
-
-		return fromEnv
-	}
-
-	return getPort({ port: portNumbers(3000, 3999) })
-})()
+const port = await getPort(3000, 3999)
 
 
 
