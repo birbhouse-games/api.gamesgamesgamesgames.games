@@ -4,7 +4,8 @@
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
-    "dev": "bun run ./src/index.ts",
+    "dev": "bun --watch ./src/index.ts",
+    "start": "bun run ./src/index.ts",
     "generate-types": "tsc",
     "lint": "eslint ./src/",
     "test": "NODE_ENV=test nyc --reporter=lcovonly --reporter=text-summary mocha"
