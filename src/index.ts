@@ -18,6 +18,7 @@ import noTrailingSlash from 'koa-no-trailing-slash'
 import { atprotoAuthMiddleware } from './middleware/atprotoAuthMiddleware'
 import { route as atprotoAuthCallbackRoute } from './routes/v1/auth/atproto'
 import { route as atprotoAuthRoute } from './routes/v1/auth/atproto/callback'
+import { route as atprotoUserProfileRoute } from './routes/v1/atproto/user/profile'
 import { route as clientMetadataRoute } from './routes/v1/atproto/client-metadata'
 import { getPort } from './helpers/getPort'
 import { handleStart } from './helpers/handleStart'
@@ -61,6 +62,7 @@ const api = new API({
 	routes: [
 		atprotoAuthCallbackRoute,
 		atprotoAuthRoute,
+		atprotoUserProfileRoute,
 		clientMetadataRoute,
 		healthCheckRoute,
 		jwksRoute,
