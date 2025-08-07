@@ -46,7 +46,12 @@ const api = new API({
 		noTrailingSlash(),
 		compress(),
 		loggerMiddleware(logger),
-		cors(),
+		cors({
+			allowHeaders: [
+				'Authorization',
+				'Content-Type',
+			],
+		}),
 		koaBody(),
 		statusCodeGeneratorMiddleware(),
 		atprotoAuthMiddleware(),

@@ -11,7 +11,6 @@ import {
 // Local imports
 import { type KoaContext } from '../../../../typedefs/KoaContext'
 import { supabase } from '../../../../helpers/supabase'
-import { Agent } from '@atproto/api'
 
 
 
@@ -26,17 +25,12 @@ export const route = new Route({
 
 		const { session } = await atproto.client.callback(new URLSearchParams(query))
 
-		context.cookies.set('atprotoDID', session.did)
+		const result = await supabase
+			.from('ATproto Session Tokens')
+			.insert({ did: session.did })
+			.select('token')
 
-		// const {
-		// 	data,
-		// 	error,
-		// } = await supabase.auth.signUp({
-		// 	email: session.email,
-		// 	password: 'example-password',
-		// })
-
-		context.redirect(process.env.PUBLIC_CLIENT_REDIRECT_URL)
+		context.redirect(`${process.env.PUBLIC_CLIENT_REDIRECT_URL}/dashboard#token=${encodeURIComponent(result.data[0].token)}`)
 	},
 	methods: ['get'],
 	middlewares: [bodyBuilderMiddleware()],
