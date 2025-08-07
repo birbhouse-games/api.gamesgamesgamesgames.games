@@ -1,5 +1,6 @@
 // Module imports
-import { Middleware } from 'koa'
+import { bodyBuilderMiddleware } from '@trezy-studios/koa-api'
+import { type Middleware } from 'koa'
 
 
 
@@ -24,6 +25,16 @@ export function atprotoAuthMiddleware(): Middleware {
 
 		if (token) {
 			const userDID = await getDIDForToken(token)
+
+			if (!userDID) {
+				await bodyBuilderMiddleware()(context, () => {
+					context.errors.push('Auth token is invalid or expired.')
+					context.status = 401
+				})
+
+				return
+			}
+
 			const session = await client.restore(userDID)
 			const agent = new Agent(session)
 
