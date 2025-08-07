@@ -13,7 +13,10 @@ import { supabase } from './supabase'
 
 
 // Constants
-const STATE: Record<string, NodeSavedState> = {}
+const STATE: Record<string, {
+	createdAt: Date
+	state: NodeSavedState
+}> = {}
 
 
 
@@ -65,11 +68,14 @@ export async function getATProtoOAuthClient() {
 
 			stateStore: {
 				async set(key, value): Promise<void> {
-					STATE[key] = value
+					STATE[key] = {
+						createdAt: new Date,
+						state: value,
+					}
 				},
 
 				async get(key): Promise<NodeSavedState | undefined> {
-					return STATE[key]
+					return STATE[key]?.state
 				},
 
 				async del(key): Promise<void> {
