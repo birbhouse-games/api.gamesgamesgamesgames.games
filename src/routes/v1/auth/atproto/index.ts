@@ -26,7 +26,9 @@ export const route = new Route({
 
 		try {
 			const redirectURL = await atproto.client.authorize(context.query['handle'] as string)
-			context.redirect(redirectURL.toString())
+			context.data = {
+				redirectURL: redirectURL.toString(),
+			}
 		} catch (error) {
 			return context.errors.push(error)
 		}
