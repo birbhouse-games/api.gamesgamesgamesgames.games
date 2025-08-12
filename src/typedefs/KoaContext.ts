@@ -12,8 +12,8 @@ import { type Context } from 'koa'
 
 export type KoaContext = Context & {
 	atproto: {
-		agent: Agent | undefined
+		agent?: Agent
 		client: NodeOAuthClient
-		session: OAuthSession | undefined
+		session?: OAuthSession
 	}
 }
